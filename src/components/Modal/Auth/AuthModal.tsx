@@ -13,6 +13,7 @@ import {
 import React from "react";
 import { useRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
+import AuthInput from "./AuthInput";
 
 const AuthModal: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
@@ -29,7 +30,7 @@ const AuthModal: React.FC = () => {
       <Modal isOpen={modalState.open} onClose={handleClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>
+          <ModalHeader textAlign="center">
             {modalState.view === "login" && "LogIn 🙂"}
             {modalState.view === "signup" && "SignUp 🚀"}
             {modalState.view === "resetPassword" && "Reset Password 🤦"}
@@ -40,16 +41,16 @@ const AuthModal: React.FC = () => {
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
+            pb={6}
           >
             <Flex
               direction="column"
               align="center"
               justify="center"
               width="70%"
-              border="1px solid blue"
             >
               {/* <OAuthButtons />   */}
-              {/* <AuthInputs /> */}
+              <AuthInput />
               {/* <ResetPassword /> */}
             </Flex>
           </ModalBody>
