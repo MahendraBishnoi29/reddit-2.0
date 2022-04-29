@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
 
-type LoginProps = {};
+type SignUp = {};
 
-const Login: React.FC<LoginProps> = () => {
+const SignUp: React.FC<SignUp> = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
 
   const [loginForm, setLoginForm] = useState({
@@ -87,4 +87,4 @@ const Login: React.FC<LoginProps> = () => {
   );
 };
 
-export default Login;
+export default SignUp;
