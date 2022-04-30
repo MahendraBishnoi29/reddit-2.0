@@ -43,6 +43,7 @@ const Login: React.FC<LoginProps> = () => {
           border: "1px solid",
           borderColor: "blue.500",
         }}
+        bg="gray.50"
       />
       <Input
         required
@@ -62,6 +63,7 @@ const Login: React.FC<LoginProps> = () => {
           border: "1px solid",
           borderColor: "blue.500",
         }}
+        bg="gray.50"
       />
       <Button type="submit" width="100%" height="36px" mt={2} mb={2}>
         Log In

@@ -8,16 +8,18 @@ type SignUp = {};
 const SignUp: React.FC<SignUp> = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
 
-  const [loginForm, setLoginForm] = useState({
+  const [signUpForm, setSignUpForm] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
+  //Firebase Submit Logic
   const onSubmit = () => {};
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setLoginForm((prev) => ({
+    setSignUpForm((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -44,6 +46,7 @@ const SignUp: React.FC<SignUp> = () => {
           borderColor: "blue.500",
         }}
       />
+
       <Input
         required
         name="password"
@@ -62,17 +65,39 @@ const SignUp: React.FC<SignUp> = () => {
           border: "1px solid",
           borderColor: "blue.500",
         }}
+        bg="gray.50"
+      />
+
+      <Input
+        required
+        name="confirmPassword"
+        placeholder="confirm password"
+        type="password"
+        mb={2}
+        onChange={() => {
+          onChange;
+        }}
+        fontSize="10pt"
+        _placeholder={{ color: "gray.500" }}
+        _hover={{ bg: "white", border: "1px solid", borderColor: "blue.500" }}
+        _focus={{
+          outline: "none",
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
+        bg="gray.50"
       />
       <Button type="submit" width="100%" height="36px" mt={2} mb={2}>
-        Log In
+        Sign Up
       </Button>
       <Flex fontSize="8pt" justifyContent="center">
-        <Text>New here? </Text>
+        <Text>Already a redditer? </Text>
         <Text
           onClick={() =>
             setAuthModalState((prev) => ({
               ...prev,
-              view: "signup",
+              view: "login",
             }))
           }
           ml={1}
@@ -80,7 +105,7 @@ const SignUp: React.FC<SignUp> = () => {
           fontWeight={700}
           cursor="pointer"
         >
-          SIGN UP
+          LOG IN
         </Text>
       </Flex>
     </form>
