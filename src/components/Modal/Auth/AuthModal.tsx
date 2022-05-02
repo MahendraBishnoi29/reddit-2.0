@@ -1,15 +1,12 @@
 import {
-  Button,
   Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -18,6 +15,7 @@ import { authModalState } from "../../../atoms/authModalAtom";
 import { auth } from "../../../firebase/clientApp";
 import AuthInput from "./AuthInput";
 import OAuthButtons from "./OAuthButtons";
+import ResetPassword from "./ResetPassword";
 
 const AuthModal: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
@@ -43,7 +41,7 @@ const AuthModal: React.FC = () => {
           <ModalHeader textAlign="center">
             {modalState.view === "login" && "LogIn 🙂"}
             {modalState.view === "signup" && "SignUp 🚀"}
-            {modalState.view === "resetPassword" && "Reset Password 🤦"}
+            {modalState.view === "resetPassword" && "Reset Password 👀"}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody
@@ -59,14 +57,19 @@ const AuthModal: React.FC = () => {
               justify="center"
               width="70%"
             >
-              {/* OAuth Buttton Component */}
-              <OAuthButtons />
-              <Text color="gray.500" fontWeight="500">
-                OR
-              </Text>
-              {/* Auth Input Component */}
-              <AuthInput />
-              {/* <ResetPassword /> */}
+              {modalState.view === "login" || modalState.view === "signup" ? (
+                <>
+                  {/* OAuth Buttton Component */}
+                  <OAuthButtons />
+                  <Text color="gray.500" fontWeight="500">
+                    OR
+                  </Text>
+                  {/* Auth Input Component */}
+                  <AuthInput />
+                </>
+              ) : (
+                <ResetPassword />
+              )}
             </Flex>
           </ModalBody>
         </ModalContent>
