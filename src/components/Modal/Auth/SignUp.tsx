@@ -4,6 +4,7 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
 import { auth } from "../../../firebase/clientApp";
+import { FIREBASE_ERRORS } from "../../../firebase/errors";
 
 type SignUp = {};
 
@@ -22,7 +23,8 @@ const SignUp: React.FC<SignUp> = () => {
     useCreateUserWithEmailAndPassword(auth);
 
   //Firebase Submit Logic
-  const onSubmit = () => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (signUpForm.password !== signUpForm.confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -47,32 +49,36 @@ const SignUp: React.FC<SignUp> = () => {
         placeholder="email"
         type="email"
         mb={2}
-        onChange={() => {
-          onChange;
-        }}
+        onChange={onChange}
         fontSize="10pt"
         _placeholder={{ color: "gray.500" }}
-        _hover={{ bg: "white", border: "1px solid", borderColor: "blue.500" }}
+        _hover={{
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
         _focus={{
           outline: "none",
           bg: "white",
           border: "1px solid",
           borderColor: "blue.500",
         }}
+        bg="gray.50"
       />
-
       <Input
         required
         name="password"
+        onChange={onChange}
         placeholder="password"
         type="password"
         mb={2}
-        onChange={() => {
-          onChange;
-        }}
         fontSize="10pt"
         _placeholder={{ color: "gray.500" }}
-        _hover={{ bg: "white", border: "1px solid", borderColor: "blue.500" }}
+        _hover={{
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
         _focus={{
           outline: "none",
           bg: "white",
@@ -81,19 +87,20 @@ const SignUp: React.FC<SignUp> = () => {
         }}
         bg="gray.50"
       />
-
       <Input
         required
         name="confirmPassword"
+        onChange={onChange}
         placeholder="confirm password"
         type="password"
         mb={2}
-        onChange={() => {
-          onChange;
-        }}
         fontSize="10pt"
         _placeholder={{ color: "gray.500" }}
-        _hover={{ bg: "white", border: "1px solid", borderColor: "blue.500" }}
+        _hover={{
+          bg: "white",
+          border: "1px solid",
+          borderColor: "blue.500",
+        }}
         _focus={{
           outline: "none",
           bg: "white",
@@ -103,24 +110,33 @@ const SignUp: React.FC<SignUp> = () => {
         bg="gray.50"
       />
 
-      {error && <Text>{error}</Text>}
+      <Text textAlign="center" color="red" fontSize="10pt">
+        {error ||
+          FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
+      </Text>
 
-      <Button type="submit" width="100%" height="36px" mt={2} mb={2}>
+      <Button
+        isLoading={loading}
+        width="100%"
+        height="36px"
+        mt={2}
+        mb={2}
+        type="submit"
+      >
         Sign Up
       </Button>
-      <Flex fontSize="8pt" justifyContent="center">
-        <Text>Already a redditer? </Text>
+      <Flex fontSize="9pt" justifyContent="center">
+        <Text mr={1}>Already a redditor?</Text>
         <Text
+          color="blue.500"
+          fontWeight={700}
+          cursor="pointer"
           onClick={() =>
             setAuthModalState((prev) => ({
               ...prev,
               view: "login",
             }))
           }
-          ml={1}
-          color="blue.500"
-          fontWeight={700}
-          cursor="pointer"
         >
           LOG IN
         </Text>
