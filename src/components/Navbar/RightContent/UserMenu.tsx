@@ -64,7 +64,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "blue.500", color: "white" }}
-              onClick={() => setAuthModalState({ open: true, view: "login" })}
             >
               <Flex align="center">
                 <Icon fontSize={20} mr={2} as={CgProfile} />
@@ -89,7 +88,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "blue.500", color: "white" }}
-              onClick={() => signOut(auth)}
+              onClick={() => setAuthModalState({ open: true, view: "login" })}
             >
               <Flex align="center">
                 <Icon fontSize={20} mr={2} as={MdOutlineLogin} />
