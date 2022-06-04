@@ -34,7 +34,7 @@ const Directory: React.FC = () => {
         </Flex>
       </MenuButton>
       <MenuList>
-        <Communities /> Community
+        <Communities />
       </MenuList>
     </Menu>
   );
