@@ -26,6 +26,10 @@ type UserMenuProps = { user?: User | null };
 const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
   const setAuthModalState = useSetRecoilState(authModalState);
 
+  const logOut = async () => {
+    await signOut(auth);
+  };
+
   return (
     <Menu>
       <MenuButton
@@ -85,7 +89,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
               fontSize="10pt"
               fontWeight={700}
               _hover={{ bg: "blue.500", color: "white" }}
-              onClick={() => signOut(auth)}
+              onClick={logOut}
             >
               <Flex align="center">
                 <Icon fontSize={20} mr={2} as={MdOutlineLogin} />
