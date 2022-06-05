@@ -46,7 +46,7 @@ const SignUp: React.FC<SignUp> = () => {
   //Create User Document is Firestore
   const createUserDocument = async (user: User) => {
     await addDoc(
-      collection(firestore, "user"),
+      collection(firestore, "users"),
       JSON.parse(JSON.stringify(user))
     );
   };

@@ -18,9 +18,16 @@ import {
 import { BsFillEyeFill, BsFillPersonFill } from "react-icons/bs";
 import { HiLockClosed } from "react-icons/hi";
 import React, { useState } from "react";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  runTransaction,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { auth, firestore } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { async } from "@firebase/util";
 
 type CreateCommunityModalProps = {
   open: boolean;
@@ -68,19 +75,29 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
     try {
       //if Name is Uniue then create a community doc in firestore
       const communityDocRef = doc(firestore, "communities", communityName);
-      const communityDoc = await getDoc(communityDocRef);
 
-      //checks that community name is uniQue
-      if (communityDoc.exists()) {
-        throw new Error(`Sorry, r/${communityName} is taken, Try another.`);
-      }
+      await runTransaction(firestore, async (transaction) => {
+        const communityDoc = await transaction.get(communityDocRef);
+        //checks that community name is uniQue
+        if (communityDoc.exists()) {
+          throw new Error(`Sorry, r/${communityName} is taken, Try another.`);
+        }
 
-      //if all above conditions passes create a community in database
-      await setDoc(communityDocRef, {
-        creatorId: user?.uid,
-        createdAt: serverTimestamp(),
-        numberOfMembers: 1,
-        privacyType: communityType,
+        //if all above conditions passes create a community in database
+        transaction.set(communityDocRef, {
+          creatorId: user?.uid,
+          createdAt: serverTimestamp(),
+          numberOfMembers: 1,
+          privacyType: communityType,
+        });
+        //Create communitySnippet on User
+        transaction.set(
+          doc(firestore, `users/${user?.uid}/communitySnippets`, communityName),
+          {
+            communityId: communityName,
+            isModerator: true,
+          }
+        );
       });
     } catch (error) {
       console.log("handleCreateCommunity error", error);
