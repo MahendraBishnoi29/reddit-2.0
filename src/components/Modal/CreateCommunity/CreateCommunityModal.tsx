@@ -52,8 +52,10 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
     setCommunityType(event.target.name);
   };
 
-  //Create Community
+  //Create Community Logic
   const handleCreateCommunity = async () => {
+    if (error) setError("");
+    //validate community
     var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     if (format.test(communityName) || communityName.length < 3) {
       setError(
@@ -61,19 +63,19 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
       );
       return;
     }
-
     setLoading(true);
 
     try {
-      //if Name is Uniue create a community doc in firestore
+      //if Name is Uniue then create a community doc in firestore
       const communityDocRef = doc(firestore, "communities", communityName);
       const communityDoc = await getDoc(communityDocRef);
 
+      //checks that community name is uniQue
       if (communityDoc.exists()) {
         throw new Error(`Sorry, r/${communityName} is taken, Try another.`);
       }
 
-      //Create Community
+      //if all above conditions passes create a community in database
       await setDoc(communityDocRef, {
         creatorId: user?.uid,
         createdAt: serverTimestamp(),
@@ -84,7 +86,6 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
       console.log("handleCreateCommunity error", error);
       setError(error.message);
     }
-
     setLoading(false);
   };
 
