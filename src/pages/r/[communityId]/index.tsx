@@ -4,10 +4,10 @@ import React from "react";
 import { firestore } from "../../../firebase/clientApp";
 
 type CommunityPageProps = {
-  communityData: Community;
+  // communityData: Community;
 };
 
-const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
+const CommunityPage: React.FC<CommunityPageProps> = () => {
   return <div>CommunityPage</div>;
 };
 
