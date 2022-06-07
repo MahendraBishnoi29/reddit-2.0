@@ -1,14 +1,16 @@
 import { doc, getDoc } from "firebase/firestore";
 import { GetServerSideProps } from "next";
 import React from "react";
+import { Community } from "../../../atoms/communitiesAtom";
 import { firestore } from "../../../firebase/clientApp";
+import safeJsonStringify from "safe-json-stringify";
 
 type CommunityPageProps = {
   communityData: Community;
 };
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
-  return <div>CommunityPage</div>;
+  return <div>Welcome To: {communityData.id}</div>;
 };
 
 //Server Side Rendering
@@ -24,7 +26,9 @@ export async function getServerSideProps(context: GetServerSideProps) {
 
     return {
       props: {
-        communityData: communityDoc.data(),
+        communityData: JSON.parse(
+          safeJsonStringify({ id: communityDoc.id, ...communityDoc.data() })
+        ),
       },
     };
   } catch (error) {
