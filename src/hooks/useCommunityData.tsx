@@ -1,6 +1,6 @@
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authModalState } from "../atoms/authModalAtom";
@@ -40,12 +40,13 @@ const useCommunityData = () => {
       );
 
       const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
+      console.log(snippets);
 
-      setCommunityStateValue((prev) => ({
-        ...prev,
-        mySnippets: snippets as CommunitySnippet[],
-        snippetsFetched: true,
-      }));
+      // setCommunityStateValue((prev) => ({
+      //   ...prev,
+      //   mySnippets: snippets as CommunitySnippet[],
+      //   snippetsFetched: true,
+      // }));
     } catch (error: any) {
       console.log("getMySnippets error", error);
       setError(error.message);
@@ -55,6 +56,11 @@ const useCommunityData = () => {
 
   const joinCommunity = () => {};
   const leaveCommunity = () => {};
+
+  useEffect(() => {
+    if (!user) return;
+    getMySnippets();
+  }, [user]);
 
   return {
     communityStateValue,
