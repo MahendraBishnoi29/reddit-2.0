@@ -1,4 +1,11 @@
-import { collection, getDocs } from "firebase/firestore";
+import { async } from "@firebase/util";
+import {
+  collection,
+  doc,
+  getDocs,
+  increment,
+  writeBatch,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -57,8 +64,68 @@ const useCommunityData = () => {
     setLoading(false);
   };
 
-  const joinCommunity = () => {};
-  const leaveCommunity = () => {};
+  const joinCommunity = async (communityData: Community) => {
+    //Batch write
+    try {
+      const batch = writeBatch(firestore);
+      const newSnippet: CommunitySnippet = {
+        communityId: communityData?.id,
+        imageURL: communityData.imageURL || "",
+      };
+      //Create a new community snippet
+      batch.set(
+        doc(
+          firestore,
+          `users/${user?.uid}/communitySnippets`,
+          communityData?.id
+        ),
+        newSnippet
+      );
+      //Updating the numberOfMembers (1)
+      batch.update(doc(firestore, "communities", communityData?.id), {
+        numberOfMembers: increment(1),
+      });
+      await batch.commit();
+
+      //Update recoil state - communityState.mySnippets
+      setCommunityStateValue((prev) => ({
+        ...prev,
+        mySnippets: [...prev.mySnippets, newSnippet],
+      }));
+    } catch (error: any) {
+      console.log("joinCommunity error", error.message);
+      setError(error.message);
+    }
+    setLoading(false);
+  };
+
+  // Leave Community
+  const leaveCommunity = async (communityId: string) => {
+    try {
+      const batch = writeBatch(firestore);
+
+      batch.delete(
+        doc(firestore, `users/${user?.uid}/communitySnippets/${communityId}`)
+      );
+
+      batch.update(doc(firestore, "communities", communityId), {
+        numberOfMembers: increment(-1),
+      });
+
+      await batch.commit();
+
+      setCommunityStateValue((prev) => ({
+        ...prev,
+        mySnippets: prev.mySnippets.filter(
+          (item) => item.communityId !== communityId
+        ),
+      }));
+    } catch (error: any) {
+      console.log("leaveCommunity error", error);
+      setError(error.message);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (!user) return;
