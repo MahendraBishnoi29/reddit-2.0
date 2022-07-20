@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+const SubmitPostPage: React.FC = () => {
+  return <div>Submit Page</div>;
+};
 
-function submit({}: Props) {
-  return (
-    <div>submit</div>
-  )
-}
-
-export default submit
+export default SubmitPostPage;
