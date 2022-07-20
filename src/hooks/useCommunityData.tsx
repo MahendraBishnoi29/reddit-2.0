@@ -4,7 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authModalState } from "../atoms/authModalAtom";
-import { Community, communityState } from "../atoms/communitiesAtom";
+import {
+  Community,
+  CommunitySnippet,
+  communityState,
+} from "../atoms/communitiesAtom";
 import { auth, firestore } from "../firebase/clientApp";
 
 const useCommunityData = () => {
@@ -27,7 +31,6 @@ const useCommunityData = () => {
       leaveCommunity(communityData?.id);
       return;
     }
-
     joinCommunity(communityData);
   };
 
@@ -40,13 +43,13 @@ const useCommunityData = () => {
       );
 
       const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
-      console.log(snippets);
+      console.log("here are my snippets", snippets);
 
-      // setCommunityStateValue((prev) => ({
-      //   ...prev,
-      //   mySnippets: snippets as CommunitySnippet[],
-      //   snippetsFetched: true,
-      // }));
+      setCommunityStateValue((prev) => ({
+        ...prev,
+        mySnippets: snippets as CommunitySnippet[],
+        snippetsFetched: true,
+      }));
     } catch (error: any) {
       console.log("getMySnippets error", error);
       setError(error.message);
@@ -65,6 +68,7 @@ const useCommunityData = () => {
   return {
     communityStateValue,
     onJoinOrLeaveCommunity,
+    loading,
   };
 };
 
