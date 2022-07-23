@@ -1,11 +1,14 @@
 import {
   Alert,
   AlertDescription,
+  AlertDialog,
   AlertIcon,
   AlertTitle,
   Flex,
   Icon,
   Text,
+  toast,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { BsLink45Deg, BsMic } from "react-icons/bs";
@@ -77,6 +80,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
   const { selectedFile, setSelectedFile, onSelectFile } = useSelectFile();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const toast = useToast();
 
   const handleCreatePost = async () => {
     const { communityId } = router.query;
@@ -113,6 +117,14 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
           imageURL: downloadURL,
         });
       }
+
+      toast({
+        title: "Post Created Successfully.",
+        status: "success",
+        duration: 2300,
+        isClosable: true,
+      });
+
       // redirect user back to community page
       router.back();
     } catch (error: any) {
@@ -163,6 +175,13 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
           />
         )}
       </Flex>
+      {error &&
+        toast({
+          title: "Error Creating Post ☹.",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        })}
     </Flex>
   );
 };
