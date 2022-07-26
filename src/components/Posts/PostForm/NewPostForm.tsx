@@ -119,10 +119,11 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
       }
 
       toast({
-        title: "Post Created Successfully.",
+        title: "Post Created 🥳.",
         status: "success",
         duration: 2300,
         isClosable: true,
+        position: "top-right",
       });
 
       // redirect user back to community page
@@ -181,6 +182,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
           status: "error",
           duration: 2000,
           isClosable: true,
+          position: "top-right",
         })}
     </Flex>
   );
