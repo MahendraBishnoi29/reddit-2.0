@@ -89,15 +89,15 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
       communityId: communityId as string,
       communityImageURL: communityImageURL || "",
       creatorId: user?.uid,
-      // ! means we are sure that there is always a user who has a email field, i.e. it is not null
-      creatorDisplayName: user.email!.split("@")[0],
+      // ! (Bang Operator) means we are sure that there is always a user who has a email field, i.e. it is not null
+      creatorDisplayName: user?.email!.split("@")[0],
       title: textInputs.title,
       body: textInputs.body,
       numberOfComments: 0,
       voteStatus: 0,
       createdAt: serverTimestamp() as Timestamp,
       id: "",
-      userDisplayText: "",
+      authorDisplayText: "",
     };
 
     setLoading(true);
@@ -121,7 +121,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
       toast({
         title: "Post Created 🥳.",
         status: "success",
-        duration: 2300,
+        duration: 3000,
         isClosable: true,
         position: "top-right",
       });
@@ -178,9 +178,9 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
       </Flex>
       {error &&
         toast({
-          title: "Error Creating Post ☹.",
+          title: "Error Creating Post!",
           status: "error",
-          duration: 2000,
+          duration: 2300,
           isClosable: true,
           position: "top-right",
         })}
