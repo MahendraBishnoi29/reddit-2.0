@@ -7,6 +7,7 @@ import {
   Spinner,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { NextRouter } from "next/router";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -30,7 +31,7 @@ type PostItemProps = {
   userIsCreator: boolean;
   userVoteValue: number;
   onVote: () => {};
-  onDeletePost: () => {};
+  onDeletePost: (post: Post) => Promise<boolean>;
   onSelectPost: () => {};
 };
 
@@ -43,6 +44,30 @@ const PostItem: React.FC<PostItemProps> = ({
   onSelectPost,
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
+  const [error, setError] = useState(false);
+  const toast = useToast();
+  // function for deleting the post
+  const handleDelete = async () => {
+    try {
+      const success = await onDeletePost(post);
+      console.log("here's the post", post);
+      if (!success) {
+        throw new Error("Failed to Delete a Post");
+      }
+
+      toast({
+        title: "Post Deleted.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+
+      console.log("post was deleted");
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
   return (
     <Flex
       border="1px solid"
@@ -150,7 +175,7 @@ const PostItem: React.FC<PostItemProps> = ({
               borderRadius={4}
               _hover={{ bg: "gray.200" }}
               cursor="pointer"
-              onClick={onDeletePost}
+              onClick={handleDelete}
             >
               <Icon as={AiOutlineDelete} mr={2} />
               <Text fontSize="9pt">Delete</Text>

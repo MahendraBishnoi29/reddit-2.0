@@ -38,7 +38,7 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
         ...prev,
         posts: posts as Post[],
       }));
-      console.log(posts);
+      console.log("all posts are fetched", posts);
     } catch (error: any) {
       console.log("get Post error", error.message);
     }
@@ -55,9 +55,9 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
         <PostLoader />
       ) : (
         <Stack>
-          {postStateValue.posts.map((item) => (
+          {postStateValue.posts.map((item, k) => (
             <PostItem
-              key={item.id}
+              key={k}
               post={item}
               userIsCreator={user?.uid === item.creatorId}
               userVoteValue={undefined}
