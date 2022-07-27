@@ -96,6 +96,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
       numberOfComments: 0,
       voteStatus: 0,
       createdAt: serverTimestamp() as Timestamp,
+      authorDisplayText: "",
     };
 
     setLoading(true);

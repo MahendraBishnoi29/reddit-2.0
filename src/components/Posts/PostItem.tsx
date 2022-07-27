@@ -45,9 +45,11 @@ const PostItem: React.FC<PostItemProps> = ({
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
   const [error, setError] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
   const toast = useToast();
   // function for deleting the post
   const handleDelete = async () => {
+    setLoadingDelete(true);
     try {
       const success = await onDeletePost(post);
       console.log("here's the post", post);
@@ -67,6 +69,7 @@ const PostItem: React.FC<PostItemProps> = ({
     } catch (error: any) {
       setError(error.message);
     }
+    setLoadingDelete(false);
   };
   return (
     <Flex
@@ -107,6 +110,14 @@ const PostItem: React.FC<PostItemProps> = ({
         />
       </Flex>
       <Flex direction="column" width="100%">
+        {error &&
+          toast({
+            title: "Post Deletion Failed",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+            position: "top-right",
+          })}
         <Stack spacing={1} p="10px">
           <Stack direction="row" spacing={0.6} align="center" fontSize="9pt">
             {/* Home Page Check */}
@@ -177,8 +188,14 @@ const PostItem: React.FC<PostItemProps> = ({
               cursor="pointer"
               onClick={handleDelete}
             >
-              <Icon as={AiOutlineDelete} mr={2} />
-              <Text fontSize="9pt">Delete</Text>
+              {loadingDelete ? (
+                <Spinner size="sm" />
+              ) : (
+                <>
+                  <Icon as={AiOutlineDelete} mr={2} />
+                  <Text fontSize="9pt">Delete</Text>
+                </>
+              )}
             </Flex>
           )}
         </Flex>
