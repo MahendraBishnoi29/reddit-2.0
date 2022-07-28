@@ -38,7 +38,6 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
         ...prev,
         posts: posts as Post[],
       }));
-      console.log("all posts are fetched", posts);
     } catch (error: any) {
       console.log("get Post error", error.message);
     }
