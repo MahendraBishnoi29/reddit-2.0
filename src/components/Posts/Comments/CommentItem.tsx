@@ -4,7 +4,6 @@ import moment from "moment";
 import React from "react";
 import { FaReddit } from "react-icons/fa";
 import {
-  IoArrowDownCircle,
   IoArrowDownCircleOutline,
   IoArrowUpCircleOutline,
 } from "react-icons/io5";
