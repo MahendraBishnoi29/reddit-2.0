@@ -56,7 +56,6 @@ const useCommunityData = () => {
       );
 
       const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
-      console.log("here are my snippets", snippets);
 
       setCommunityStateValue((prev) => ({
         ...prev,
@@ -77,6 +76,7 @@ const useCommunityData = () => {
       const newSnippet: CommunitySnippet = {
         communityId: communityData?.id,
         imageURL: communityData.imageURL || "",
+        isModerator: user?.uid === communityData.creatorId,
       };
       //Create a new community snippet
       batch.set(
