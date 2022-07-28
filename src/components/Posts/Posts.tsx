@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Community } from "../../atoms/communitiesAtom";
 import { Post } from "../../atoms/postsAtom";
 import { auth, firestore } from "../../firebase/clientApp";
-import usePosts from "../../hooks/usePOsts";
+import usePosts from "../../hooks/usePosts";
 import PostItem from "./PostItem";
 import PostLoader from "./PostLoader";
 
@@ -60,7 +60,10 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
               key={k}
               post={item}
               userIsCreator={user?.uid === item.creatorId}
-              userVoteValue={undefined}
+              userVoteValue={
+                postStateValue.postVotes.find((vote) => vote.postId === item.id)
+                  ?.voteValue
+              }
               onVote={onVote}
               onDeletePost={onDeletePost}
               onSelectPost={onSelectPost}
