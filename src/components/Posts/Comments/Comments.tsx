@@ -9,7 +9,8 @@ import {
   writeBatch,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Post } from "../../../atoms/postsAtom";
+import { useSetRecoilState } from "recoil";
+import { Post, postState } from "../../../atoms/postsAtom";
 import { firestore } from "../../../firebase/clientApp";
 import CommentInput from "./CommentInput";
 
@@ -39,6 +40,7 @@ const Comments: React.FC<CommentsProps> = ({
   const [comments, setComments] = useState<Comment[]>([]);
   const [fetchLoading, setFetchLoading] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
+  const setPostState = useSetRecoilState(postState);
   const toast = useToast();
 
   const onCreateComment = async (commentText: string) => {
@@ -75,13 +77,20 @@ const Comments: React.FC<CommentsProps> = ({
         position: "top-right",
       });
 
+      // Update client recoil state
       setCommentText("");
       setComments((prev) => [newComment, ...prev]);
+      setPostState((prev) => ({
+        ...prev,
+        selectedPost: {
+          ...prev.selectedPost,
+          numberOfComments: prev.selectedPost?.numberOfComments! + 1,
+        },
+      }));
     } catch (error: any) {
       console.log(error.message);
     }
     setCreateLoading(false);
-    // Update client recoil state
   };
 
   const onDeleteComment = async (comments: any) => {};
