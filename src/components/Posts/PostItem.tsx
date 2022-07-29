@@ -23,7 +23,6 @@ import {
   IoBookmarkOutline,
 } from "react-icons/io5";
 import moment from "moment";
-import Link from "next/link";
 import { Post } from "../../atoms/postsAtom";
 
 type PostItemProps = {
@@ -37,7 +36,8 @@ type PostItemProps = {
     communityId: string
   ) => void;
   onDeletePost: (post: Post) => Promise<boolean>;
-  onSelectPost: (post: Post) => void;
+  onSelectPost?: (post: Post) => void;
+  homePage?: boolean;
 };
 
 const PostItem: React.FC<PostItemProps> = ({
@@ -47,6 +47,7 @@ const PostItem: React.FC<PostItemProps> = ({
   onVote,
   onDeletePost,
   onSelectPost,
+  homePage,
 }) => {
   const [loadingImage, setLoadingImage] = useState(true);
   const [error, setError] = useState(false);
