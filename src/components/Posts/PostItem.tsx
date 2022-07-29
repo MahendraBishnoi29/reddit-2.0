@@ -24,6 +24,7 @@ import {
 } from "react-icons/io5";
 import moment from "moment";
 import { Post } from "../../atoms/postsAtom";
+import Link from "next/link";
 
 type PostItemProps = {
   post: Post;
@@ -70,7 +71,7 @@ const PostItem: React.FC<PostItemProps> = ({
       }
 
       toast({
-        title: "Post Deleted.",
+        title: "Post Deleted",
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -135,6 +136,33 @@ const PostItem: React.FC<PostItemProps> = ({
         <Stack spacing={1} p="10px">
           <Stack direction="row" spacing={0.6} align="center" fontSize="9pt">
             {/* Home Page Check */}
+
+            {homePage && (
+              <>
+                {post.communityImageURL ? (
+                  <Image
+                    alt="communityImage"
+                    src={post.communityImageURL}
+                    borderRadius="full"
+                    boxSize="18px"
+                    mr={2}
+                  />
+                ) : (
+                  <Icon as={FaReddit} fontSize="18pt" mr={1} color="blue.500" />
+                )}
+                <Link href={`r/${post.communityId}`}>
+                  <Text
+                    fontWeight={700}
+                    _hover={{ textDecoration: "underline" }}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    {`r/${post.communityId}`}
+                  </Text>
+                </Link>
+                <Icon as={BsDot} color="gray.500" fontSize={8} />
+              </>
+            )}
+
             <Text>
               Posted by {post.creatorDisplayName} &nbsp;
               {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
