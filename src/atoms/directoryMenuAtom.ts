@@ -27,7 +27,7 @@ export const defaultMenuState: DirectoryMenuState = {
   selectedMenuItem: defaultMenuItem,
 };
 
-export const directoryMenuState = atom({
+export const directoryMenuState = atom<DirectoryMenuState>({
   key: "directoryMenuState",
   default: defaultMenuState,
 });
