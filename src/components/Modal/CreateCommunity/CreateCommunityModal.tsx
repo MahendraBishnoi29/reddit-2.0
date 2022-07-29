@@ -14,6 +14,7 @@ import {
   ModalOverlay,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { BsFillEyeFill, BsFillPersonFill } from "react-icons/bs";
 import { HiLockClosed } from "react-icons/hi";
@@ -27,7 +28,8 @@ import {
 } from "firebase/firestore";
 import { auth, firestore } from "../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { async } from "@firebase/util";
+import { useRouter } from "next/router";
+import useDirectory from "../../../hooks/useDirectory";
 
 type CreateCommunityModalProps = {
   open: boolean;
@@ -44,6 +46,9 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
   const [communityType, setCommunityType] = useState("public");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const toast = useToast();
+  const router = useRouter();
+  const { toggleMenuOpen } = useDirectory();
 
   //for Limiting Characters to 21
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +104,20 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({
           }
         );
       });
-    } catch (error) {
+
+      setCommunityName("");
+      handleClose();
+      toggleMenuOpen();
+      router.push(`r/${communityName}`);
+
+      toast({
+        title: "Community Created 🎉",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
+    } catch (error: any) {
       console.log("handleCreateCommunity error", error);
       setError(error.message);
     }
