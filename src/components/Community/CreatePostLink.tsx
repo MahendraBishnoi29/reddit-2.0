@@ -1,5 +1,4 @@
 import { Flex, Icon, Input } from "@chakra-ui/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -23,8 +22,12 @@ const CreatePostLink: React.FC = () => {
       setAuthModalState({ open: true, view: "login" });
     }
     const { communityId } = router.query;
-    router.push(`/r/${communityId}/submit`);
-    console.log(communityId);
+
+    if (communityId) {
+      router.push(`/r/${communityId}/submit`);
+      return;
+    }
+    toggleMenuOpen();
   };
 
   return (
