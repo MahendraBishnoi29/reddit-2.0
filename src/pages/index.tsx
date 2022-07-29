@@ -26,33 +26,31 @@ const Home: NextPage = () => {
 
   const buildNoUserHomeFeed = async () => {
     setLoading(true);
-
     try {
-      const postsQuery = query(
+      const postQuery = query(
         collection(firestore, "posts"),
         orderBy("voteStatus", "desc"),
         limit(10)
       );
 
-      const postDocs = await getDocs(postsQuery);
+      const postDocs = await getDocs(postQuery);
       const posts = postDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
       setPostStateValue((prev) => ({
         ...prev,
         posts: posts as Post[],
       }));
-    } catch (error) {
-      console.log("buildNoUSerHomeFeed Error", error);
+      console.log(posts);
+    } catch (error: any) {
+      console.log(error.message);
     }
-
     setLoading(false);
   };
+
   const getUserPostVotes = () => {};
 
   useEffect(() => {
     if (!user && !loadingUser) buildNoUserHomeFeed();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadingUser, user]);
+  }, [user, loadingUser]);
 
   return (
     <PageContent>
@@ -75,7 +73,7 @@ const Home: NextPage = () => {
                   )?.voteValue
                 }
                 userIsCreator={user?.uid === post.creatorId}
-                homePage // true
+                homePage
               />
             ))}
           </Stack>
