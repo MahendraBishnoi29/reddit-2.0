@@ -41,6 +41,7 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
         ) : (
           <Icon as={icon} fontSize={20} mr={2} color={iconColor} />
         )}
+        {displayText}
       </Flex>
     </MenuItem>
   );
