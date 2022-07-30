@@ -15,6 +15,7 @@ import { useRecoilValue } from "recoil";
 import { communityState } from "../atoms/communitiesAtom";
 import { Post, PostVote } from "../atoms/postsAtom";
 import CreatePostLink from "../components/Community/CreatePostLink";
+import Recommendations from "../components/Community/REcommendations";
 import PageContent from "../components/Layout/PageContent";
 import PostItem from "../components/Posts/PostItem";
 import PostLoader from "../components/Posts/PostLoader";
@@ -157,7 +158,9 @@ const Home: NextPage = () => {
         )}
       </>
 
-      <></>
+      <>
+        <Recommendations />
+      </>
     </PageContent>
   );
 };
