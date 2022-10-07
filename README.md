@@ -1,34 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Reddit 🐰
 
-## Getting Started
+Reddit is a social news aggregation, content rating, and discussion website. Registered users submit content to the site such as links, text posts, images, which are then voted up or down by other members.
 
-First, run the development server:
+## Link
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Deploying....
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Build Photos ⬇
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+![Screenshot (175)](https://user-images.githubusercontent.com/74294202/194495984-b684a17c-5dfb-433a-9e37-ee2f29e6f25a.png)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+![Screenshot (187)](https://user-images.githubusercontent.com/74294202/194496566-ed02d720-624f-44a8-9376-3f6b1a330097.png)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# Features ⭐
 
-## Learn More
+- LogIn/SignUp using Firebase Google Auth.
+- Email/Password SignUp.
+- User Can Create and Delete the Posts.
+- Upvote and Downvote Functionality.
+- You Can Create Your Own Communities as well as You Can join Others Communities.
+- Fully Responsive for All Devices.
 
-To learn more about Next.js, take a look at the following resources:
+# Tech Stack 🛠
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=flat&logo=firebase)-
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)-
+![Chakra](https://img.shields.io/badge/chakra-%234ED1C5.svg?style=flat&logo=chakraui&logoColor=white)
