@@ -44,8 +44,6 @@ const Home: NextPage = () => {
           (snippet) => snippet.communityId
         );
 
-        console.log("NO posts here in home ");
-
         const postQuery = query(
           collection(firestore, "posts"),
           where("communityId", "in", myCommunityIds),
