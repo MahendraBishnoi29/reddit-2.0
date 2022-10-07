@@ -11,8 +11,6 @@ import {
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useRecoilValue } from "recoil";
-import { communityState } from "../atoms/communitiesAtom";
 import { Post, PostVote } from "../atoms/postsAtom";
 import CreatePostLink from "../components/Community/CreatePostLink";
 import PersonalHome from "../components/Community/PersonalItem";
@@ -45,6 +43,8 @@ const Home: NextPage = () => {
         const myCommunityIds = communityStateValue.mySnippets.map(
           (snippet) => snippet.communityId
         );
+
+        console.log("NO posts here in home ");
 
         const postQuery = query(
           collection(firestore, "posts"),
@@ -85,7 +85,6 @@ const Home: NextPage = () => {
         ...prev,
         posts: posts as Post[],
       }));
-      console.log("Posts from no User", posts);
     } catch (error: any) {
       console.log(error.message);
     }

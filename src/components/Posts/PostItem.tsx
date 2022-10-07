@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/link-passhref */
 import React, { useState } from "react";
 import {
   Flex,
@@ -16,7 +17,6 @@ import { FaReddit } from "react-icons/fa";
 import {
   IoArrowDownCircleOutline,
   IoArrowDownCircleSharp,
-  IoArrowDownOutline,
   IoArrowRedoOutline,
   IoArrowUpCircleOutline,
   IoArrowUpCircleSharp,
@@ -29,7 +29,7 @@ import Link from "next/link";
 type PostItemProps = {
   post: Post;
   userIsCreator: boolean;
-  userVoteValue: number;
+  userVoteValue?: number;
   onVote: (
     event: React.MouseEvent<SVGElement, MouseEvent>,
     post: Post,
