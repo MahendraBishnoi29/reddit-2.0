@@ -91,7 +91,7 @@ const Comments: React.FC<CommentsProps> = ({
         selectedPost: {
           ...prev.selectedPost,
           numberOfComments: prev.selectedPost?.numberOfComments! + 1,
-        },
+        } as Post,
       }));
     } catch (error: any) {
       console.log(error.message);
