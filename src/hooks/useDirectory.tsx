@@ -1,27 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { FaReddit } from "react-icons/fa";
+import { useRecoilState } from "recoil";
 import { communityState } from "../atoms/communitiesAtom";
 import {
   defaultMenuItem,
   DirectoryMenuItem,
   directoryMenuState,
 } from "../atoms/directoryMenuAtom";
-import { FaReddit } from "react-icons/fa";
 
 const useDirectory = () => {
   const [directoryState, setDirectoryState] =
     useRecoilState(directoryMenuState);
   const router = useRouter();
-
-  const communityStateValue = useRecoilValue(communityState);
+  const [communityStateValue, setCommunityStateValue] =
+    useRecoilState(communityState);
 
   const onSelectMenuItem = (menuItem: DirectoryMenuItem) => {
     setDirectoryState((prev) => ({
       ...prev,
       selectedMenuItem: menuItem,
     }));
-
     router.push(menuItem.link);
     if (directoryState.isOpen) {
       toggleMenuOpen();
@@ -38,17 +38,15 @@ const useDirectory = () => {
   useEffect(() => {
     const { currentCommunity } = communityStateValue;
 
-    // const currentCommunity = communityStateValue.currentCommunity;
-
-    if (currentCommunity?.id) {
+    if (currentCommunity) {
       setDirectoryState((prev) => ({
         ...prev,
         selectedMenuItem: {
           displayText: `r/${currentCommunity.id}`,
           link: `/r/${currentCommunity.id}`,
+          imageURL: currentCommunity.imageURL,
           icon: FaReddit,
           iconColor: "blue.500",
-          imageURL: currentCommunity.imageURL,
         },
       }));
       return;
@@ -58,9 +56,19 @@ const useDirectory = () => {
       selectedMenuItem: defaultMenuItem,
     }));
   }, [communityStateValue.currentCommunity]);
-  //                              ^ used to be communityStateValue.vistedCommunities
 
-  return { directoryState, onSelectMenuItem, toggleMenuOpen };
+  // For Home Logo
+  useEffect(() => {
+    const { communityId } = router.query;
+
+    if (!communityId) {
+      setCommunityStateValue((prev) => ({
+        ...prev,
+        currentCommunity: undefined,
+      }));
+    }
+  }, [router.query]);
+
+  return { directoryState, toggleMenuOpen, onSelectMenuItem };
 };
-
 export default useDirectory;
