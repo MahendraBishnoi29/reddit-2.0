@@ -84,20 +84,17 @@ const NewPostForm: React.FC<NewPostFormProps> = ({
 
   const handleCreatePost = async () => {
     const { communityId } = router.query;
-    // create new POST object
+
     const newPost: Post = {
       communityId: communityId as string,
-      communityImageURL: communityImageURL || "",
-      creatorId: user?.uid,
-      // ! (Bang Operator) means we are sure that there is always a user who has a email field, i.e. it is not null
-      creatorDisplayName: user?.email!.split("@")[0],
+      creatorId: user.uid,
+      creatorDisplayName: user.email!.split("@")[0],
       title: textInputs.title,
       body: textInputs.body,
       numberOfComments: 0,
       voteStatus: 0,
       createdAt: serverTimestamp() as Timestamp,
     };
-
     setLoading(true);
     try {
       // store the post in DB

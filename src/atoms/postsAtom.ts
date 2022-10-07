@@ -5,7 +5,7 @@ export type Post = {
   id: string;
   communityId: string;
   communityImageURL?: string;
-  authorDisplayText: string; // change to authorDisplayText
+  creatorDisplayName: string; // change to authorDisplayText
   creatorId: string;
   title: string;
   body: string;
@@ -17,8 +17,7 @@ export type Post = {
   };
   imageURL?: string;
   postIdx?: number;
-  createdAt: Timestamp;
-  creatorDisplayName?: string;
+  createdAt?: Timestamp;
   editedAt?: Timestamp;
 };
 
