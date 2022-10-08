@@ -17,7 +17,7 @@ export type Post = {
   };
   imageURL?: string;
   postIdx?: number;
-  createdAt?: Timestamp;
+  createdAt: Timestamp;
   editedAt?: Timestamp;
 };
 
@@ -32,18 +32,18 @@ interface PostState {
   selectedPost: Post | null;
   posts: Post[];
   postVotes: PostVote[];
-  // postsCache: {
-  //   [key: string]: Post[];
-  // };
-  // postUpdateRequired: boolean;
+  postsCache: {
+    [key: string]: Post[];
+  };
+  postUpdateRequired: boolean;
 }
 
 export const defaultPostState: PostState = {
   selectedPost: null,
   posts: [],
   postVotes: [],
-  // postsCache: {},
-  // postUpdateRequired: true,
+  postsCache: {},
+  postUpdateRequired: true,
 };
 
 export const postState = atom({

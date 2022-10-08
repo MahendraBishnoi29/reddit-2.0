@@ -10,7 +10,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { NextRouter, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsChat, BsDot } from "react-icons/bs";
 import { FaReddit } from "react-icons/fa";
@@ -163,9 +163,9 @@ const PostItem: React.FC<PostItemProps> = ({
               </>
             )}
 
-            <Text>
-              Posted by {post.creatorDisplayName} &nbsp;
-              {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
+            <Text color="gray.500">
+              Posted by u/{post.creatorDisplayName}{" "}
+              {moment(new Date(post.createdAt.seconds * 1000)).fromNow()}
             </Text>
           </Stack>
           <Text fontSize="12pt" fontWeight={600}>
